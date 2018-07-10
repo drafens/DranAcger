@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    tools:context=".Activity.AnimationVideo">
+
+    <VideoView
+        android:id="@+id/video_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:background="#55000000"
+        android:textColor="#ffffff"
+        android:textSize="22sp"
+        android:id="@+id/text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RadioGroup
+        android:background="#55000000"
+        android:orientation="horizontal"
+        android:layout_gravity="end"
+        android:id="@+id/radio_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    
+    <Button
+        android:textSize="20dp"
+        android:background="#55000000"
+        android:textColor="#aaffffff"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/btn_lock"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+
+</FrameLayout>

@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">DranAcger</string>
+    <string name="Animation">动漫</string>
+    <string name="Comic">漫画</string>
+    <string name="Novel">小说</string>
+    <string name="search">Go</string>
+    <string name="order_r">倒序</string>
+    <string name="order_p">顺序</string>
+    <string name="favourite">收藏</string>
+    <string name="refresh_error">刷新失败</string>
+    <string name="refresh_success">刷新成功</string>
+    <string name="none_favourite">没有收藏</string>
+    <string name="horizon">横向</string>
+    <string name="vertical">竖向</string>
+    <string name="last_chapter">上一章</string>
+    <string name="next_chapter">下一章</string>
+</resources>
