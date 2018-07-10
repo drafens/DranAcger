@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import com.drafens.dranacger.Activity.SettingActivity;
 import com.drafens.dranacger.R;
+import com.drafens.dranacger.Tools.ApplicationUpdate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class FragmentNovel extends Fragment{
 
     @Nullable
     @Override
-    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@Nullable final LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_novel,container,false);
         button = view.findViewById(R.id.bt);
         button.setOnClickListener(new View.OnClickListener() {
@@ -29,6 +30,15 @@ public class FragmentNovel extends Fragment{
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), SettingActivity.class);
                 startActivity(intent);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ApplicationUpdate update = new ApplicationUpdate();
+                        if (update.getResult(getContext())==1){
+                            update.getUpdate(getContext());
+                        }
+                    }
+                }).start();
             }
         });
         return view;
