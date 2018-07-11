@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -41,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btn_novel;
     private List<Button> buttonList;
     private Button btn_search;
+    private Button btn_setting;
     private RadioGroup radioGroup;
     private ViewPager viewPager;
     private List<Fragment> fragments;
@@ -48,9 +48,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DynamicLine cursor;
     private float startX,stopX;
     private int lineWidth;
-    private String comicSite="";
-    private String animationSite="";
-    private String novelSite="";
     private String siteItem="";
     private String[] SiteGroup;
     private int searchItem;
@@ -62,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         initView();
-        ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.INTERNET,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE},0);
+        ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE},0);
     }
 
     private void initView(){
@@ -75,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonList.add(btn_comic);
         buttonList.add(btn_novel);
         btn_search=findViewById(R.id.btn_search);
+        btn_setting=findViewById(R.id.btn_setting);
         radioGroup = findViewById(R.id.radio_group);
         et_search=findViewById(R.id.et_search);
         viewPager = findViewById(R.id.view_pager);
@@ -85,19 +83,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_animation.setOnClickListener(this);
         btn_novel.setOnClickListener(this);
         btn_search.setOnClickListener(this);
+        btn_setting.setOnClickListener(this);
         et_search.setOnEditorActionListener(this);
-        et_search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if (b){
-                    radioGroup.setVisibility(View.VISIBLE);
-                }else {
-                    radioGroup.setVisibility(View.GONE);
-                    EditText _view = (EditText) view;
-                    _view.setHint(hintArray[searchItem]);
-                }
-            }
-        });
         fragments=new ArrayList<>();
         FragmentAnimation fragmentAnimation = new FragmentAnimation();
         fragments.add(fragmentAnimation);
@@ -157,6 +144,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }else {
                     searchAcg(et_search.getText().toString());
                 }
+                break;
+            case R.id.btn_setting:
+                Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+                startActivity(intent);
                 break;
         }
     }

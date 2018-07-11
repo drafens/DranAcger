@@ -6,20 +6,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.drafens.dranacger.Activity.SettingActivity;
+import com.drafens.dranacger.Error.ErrorActivity;
+import com.drafens.dranacger.Error.MyNetWorkException;
 import com.drafens.dranacger.R;
 import com.drafens.dranacger.Tools.ApplicationUpdate;
-
-import org.jsoup.select.NodeVisitor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class FragmentNovel extends Fragment{
     private Button button1;
@@ -34,34 +30,37 @@ public class FragmentNovel extends Fragment{
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent intent = new Intent(getContext(), SettingActivity.class);
-                //startActivity(intent);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         final ApplicationUpdate update = new ApplicationUpdate();
-                        if (update.getResult(getContext())==1){
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    new AlertDialog.Builder(getContext())
-                                            .setTitle("是否更新")
-                                            .setMessage("")
-                                            .setPositiveButton("是", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                    new Thread(new Runnable() {
-                                                        @Override
-                                                        public void run() {
-                                                            update.getUpdate(getContext());
-                                                        }
-                                                    }).start();
-                                                }
-                                            })
-                                            .setNegativeButton("否",null)
-                                            .show();
-                                }
-                            });
+                        try {
+                            int result = update.getResult(getContext());
+                            if (result==1){
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        new AlertDialog.Builder(getContext())
+                                                .setTitle("是否更新")
+                                                .setMessage("")
+                                                .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                                        new Thread(new Runnable() {
+                                                            @Override
+                                                            public void run() {
+                                                                update.getUpdate(getContext());
+                                                            }
+                                                        }).start();
+                                                    }
+                                                })
+                                                .setNegativeButton("否",null)
+                                                .show();
+                                    }
+                                });
+                            }
+                        } catch (MyNetWorkException e) {
+                            ErrorActivity.show(getContext(),"网络错误");
                         }
                     }
                 }).start();

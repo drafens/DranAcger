@@ -12,6 +12,8 @@ import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.drafens.dranacger.Error.MyNetWorkException;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -44,8 +46,8 @@ public class ApplicationUpdate{
         return version;
     }
 
-    private int getLatestVersion(){
-        int version = 0;
+    private int getLatestVersion() throws MyNetWorkException {
+        int version;
         try {
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder().url("https://raw.githubusercontent.com/drafens/DranAcger/master/app/release/output.json").build();
@@ -55,7 +57,7 @@ public class ApplicationUpdate{
             JSONObject object = jsonObject.getJSONObject("apkInfo");
             version = Integer.parseInt(object.getString("versionCode"));
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new MyNetWorkException();
         }
         return version;
     }
@@ -71,17 +73,19 @@ public class ApplicationUpdate{
         File file = new File(downloadPath, "DranAcger.apk");
         Intent intent = new Intent(Intent.ACTION_VIEW);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Log.d("TAG", "installApplication: N");
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             uri = FileProvider.getUriForFile(context, "com.drafens.dranacger.fileProvider", file);
         } else {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             uri = Uri.fromFile(file);
         }
+        Log.d("TAG", "install");
         intent.setDataAndType(uri, "application/vnd.android.package-archive");
         context.startActivity(intent);
     }
 
-    public int getResult(Context context){
+    public int getResult(Context context) throws MyNetWorkException {
         int newVersion = getLatestVersion();
         int nowVersion = getApplicationVersion(context);
         Log.d("TAG", newVersion + " "+nowVersion);
@@ -114,7 +118,6 @@ public class ApplicationUpdate{
                 try{
                     inputStream = response.body().byteStream();
                     //long total = response.body().contentLength();
-                    //File file = new File(downloadPath,"DranAcger");
                     File files = new File(downloadPath);
                     if(!files.exists()) {
                         files.mkdirs();
@@ -127,6 +130,7 @@ public class ApplicationUpdate{
                     //long sum = 0;
                     while ((len = inputStream.read(buff)) != -1) {
                         fileOutputStream.write(buff, 0, len);
+                        Log.d("TAG", "download ");
                         //sum += len;
                         //int progress = (int) (sum * 1.0f / total * 100);
                         // 下载中
@@ -135,9 +139,9 @@ public class ApplicationUpdate{
                     inputStream.close();
                     fileOutputStream.close();
                     //success
+                    Log.d("TAG", "downsuccess");
                     installApplication(context);
                 }catch (Exception e){
-                    e.printStackTrace();
                     //error
                     //Toast.makeText(context,"更新失败",Toast.LENGTH_LONG).show();
                 }

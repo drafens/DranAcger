@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
 
     <application
         android:allowBackup="true"
@@ -35,7 +36,7 @@
         <activity android:name=".Error.ErrorActivity" />
         <activity
             android:name=".Activity.AnimationVideo"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
         <activity android:name=".Activity.ComicImageVertical" />
         <activity android:name=".Activity.SettingActivity"></activity>
     </application>

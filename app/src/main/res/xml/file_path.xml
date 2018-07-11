@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
-    <external-path name="root" path="drafens/update" />
+    <external-path name="update" path="drafens/update" />
 </paths>

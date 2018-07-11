@@ -2,13 +2,19 @@ package com.drafens.dranacger.Tools;
 
 import android.content.Context;
 import android.os.Environment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.jakewharton.picasso.OkHttp3Downloader;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.List;
+
+import com.drafens.dranacger.R;
 
 import okhttp3.OkHttpClient;
 
@@ -62,7 +68,7 @@ public class ImageManager {
         }
     }
 
-    /*public static void getImageOnlyFromNet(final Context context, String url, ImageView imageView, final SwipeRefreshLayout refreshLayout) {
+    public static void getImageOnlyFromNet(final Context context, String url, ImageView imageView, final SwipeRefreshLayout refreshLayout) {
         Picasso.with(context).load(url).networkPolicy(NetworkPolicy.NO_CACHE).into(imageView, new Callback() {
             @Override
             public void onSuccess() {
@@ -75,5 +81,5 @@ public class ImageManager {
                 Toast.makeText(context, R.string.refresh_error,Toast.LENGTH_LONG).show();
             }
         });
-    }*/
+    }
 }

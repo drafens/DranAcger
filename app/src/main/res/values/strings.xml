@@ -14,4 +14,6 @@
     <string name="vertical">竖向</string>
     <string name="last_chapter">上一章</string>
     <string name="next_chapter">下一章</string>
+    <string name="setting">S</string>
+    <string name="update">更新</string>
 </resources>

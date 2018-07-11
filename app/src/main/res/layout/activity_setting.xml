@@ -1,30 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#888888"
     tools:context=".Activity.SettingActivity">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
+    <RelativeLayout
+        android:layout_margin="5dp"
+        android:background="#ccffffff"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
         <TextView
-            android:text="@string/horizon"
+            android:gravity="center_vertical"
+            android:textSize="18sp"
+            android:text="阅读方式"
+            android:id="@+id/button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <Switch
-            android:id="@+id/switch_read_patterns"
+            android:layout_height="match_parent" />
+        <RadioGroup
+            android:paddingEnd="5dp"
+            android:id="@+id/radio_read_patterns"
+            android:layout_alignParentEnd="true"
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent">
+            <RadioButton
+                android:id="@+id/radio_horizon"
+                android:text="翻页"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <RadioButton
+                android:id="@+id/radio_vertical"
+                android:text="卷轴"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RadioGroup>
+    </RelativeLayout>
 
-        <TextView
-            android:text="@string/vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+    <Button
+        android:textSize="18sp"
+        android:layout_margin="5dp"
+        android:background="#ccffffff"
+        android:id="@+id/btn_update"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:text="@string/update"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
 
-    </LinearLayout>
-
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
