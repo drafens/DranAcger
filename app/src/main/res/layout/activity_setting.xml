@@ -9,6 +9,7 @@
     tools:context=".Activity.SettingActivity">
 
     <RelativeLayout
+        android:paddingHorizontal="5dp"
         android:layout_margin="5dp"
         android:background="#ccffffff"
         android:layout_width="match_parent"
@@ -21,7 +22,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
         <RadioGroup
-            android:paddingEnd="5dp"
             android:id="@+id/radio_read_patterns"
             android:layout_alignParentEnd="true"
             android:orientation="horizontal"
