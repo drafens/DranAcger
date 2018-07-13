@@ -78,6 +78,7 @@ public class ImageManager {
 
             @Override
             public void onError() {
+                refreshLayout.setRefreshing(false);
                 Toast.makeText(context, R.string.refresh_error,Toast.LENGTH_LONG).show();
             }
         });

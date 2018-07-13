@@ -73,7 +73,7 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Episode episode = episodeList.get(position);
-        holder.name.setText(episode.getName());
+        holder.name.setText(" "+position+"  "+episode.getName());
     }
 
     @Override

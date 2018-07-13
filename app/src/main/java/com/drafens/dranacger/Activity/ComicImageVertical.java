@@ -34,15 +34,12 @@ public class ComicImageVertical extends AppCompatActivity{
     private int lastChapter;
     private int lastPage;
     private boolean nextable = true;
-    private static final int PRE_CACHE_PAGES = 5+3;
     private SwipeRefreshLayout refreshLayout;
     private TextView tv_comic_detail;
     private RecyclerView recyclerView;
     private List<String> image_url;
     private List<Episode> episodeList;
     private Book book;
-    private boolean preCacheable=true;
-    private boolean isError=true;
     private int searchItem = Book.COMIC;
     private LinearLayoutManager manager;
     private ImageVerticalAdapter adapter;
@@ -107,36 +104,6 @@ public class ComicImageVertical extends AppCompatActivity{
                 }
             }
         });
-
-        /*new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Sites sites = Sites.getSites(book.getWebsite());
-                try {
-                    image_url = sites.getImage(episodeList.get(now_chapter).getId());
-                } catch (MyNetWorkException e) {
-                    image_url = new ArrayList<>();
-                    ErrorActivity.show(ComicImageVertical.this,"网络错误");
-                }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter = new ImageVerticalAdapter(ComicImageVertical.this,image_url);
-                        recyclerView.setAdapter(adapter);
-                        setDetailText();
-                    }
-                });
-                List <String> stringList = new ArrayList<>();
-                for (int i=0;i<image_url.size()-1;i++){
-                    if (i==1||i==2){
-                        stringList.add("0");
-                    }else{
-                        stringList.add(image_url.get(i));
-                    }
-                }
-                ImageManager.loadImage(ComicImageVertical.this,stringList);
-            }
-        }).start();*/
     }
 
     private void initData() {
@@ -273,6 +240,7 @@ public class ComicImageVertical extends AppCompatActivity{
                         } catch (MyNetWorkException e) {
                             image_url = new ArrayList<>();
                             ErrorActivity.show(ComicImageVertical.this,"网络错误");
+                            break;
                         }
                     }
                 }
@@ -292,29 +260,6 @@ public class ComicImageVertical extends AppCompatActivity{
             }
         }).start();
     }
-
-    /*private void preCache() {
-        if (now_chapter<episodeList.size()-1) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Sites sites = Sites.getSites(book.getWebsite());
-                    try {
-                        if (now_chapter<episodeList.size()-1) {
-                            pre_image_url = sites.getImage(episodeList.get(now_chapter + 1).getId());
-                            isError = false;
-                        }
-                    } catch (MyNetWorkException e) {
-                        isError = true;
-                        preCacheable = true;
-                    }
-                    if(!isError) {
-                        ImageManager.loadImage(ComicImageVertical.this, pre_image_url);
-                    }
-                }
-            }).start();
-        }
-    }*/
 
     private void setDetailText(int position){
         if (position>=0&&position<tagList.size()) {

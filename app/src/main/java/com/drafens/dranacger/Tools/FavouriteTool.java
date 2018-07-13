@@ -237,4 +237,14 @@ public class FavouriteTool {
         }
         return string;
     }
+
+    private static int getInt(JSONObject object,String Tag){
+        int i;
+        try{
+            i = object.getInt(Tag);
+        }catch (Exception e){
+            i = 0;
+        }
+        return i;
+    }
 }
