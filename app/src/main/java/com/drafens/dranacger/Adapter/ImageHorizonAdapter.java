@@ -53,8 +53,8 @@ public class ImageHorizonAdapter extends PagerAdapter {
             refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
-                    ImageManager.getImageOnlyFromNet(context,images.get(position),image,refreshLayout);
-                    /*Picasso.with(context).load(images.get(position)).networkPolicy(NetworkPolicy.NO_CACHE).into(image, new Callback() {
+                    //ImageManager.getImageOnlyFromNet(context,images.get(position),image,refreshLayout);
+                    Picasso.with(context).load(images.get(position)).networkPolicy(NetworkPolicy.NO_CACHE).into(image, new Callback() {
                         @Override
                         public void onSuccess() {
                             Toast.makeText(context, R.string.refresh_success,Toast.LENGTH_LONG).show();
@@ -66,7 +66,7 @@ public class ImageHorizonAdapter extends PagerAdapter {
                             Toast.makeText(context, R.string.refresh_error,Toast.LENGTH_LONG).show();
                             refreshLayout.setRefreshing(false);
                         }
-                    });*/
+                    });
                 }
             });
 

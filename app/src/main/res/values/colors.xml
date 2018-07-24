@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <!--#3F51B5-->
+    <color name="colorPrimary">#FFFFFF</color>
+    <!--#303F9F-->
+    <color name="colorPrimaryDark">#FFFFFF</color>
     <color name="colorAccent">#FF4081</color>
     <color name="cursor_blue">#1155ff</color>
 </resources>

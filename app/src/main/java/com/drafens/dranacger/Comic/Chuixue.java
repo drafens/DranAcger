@@ -1,7 +1,6 @@
 package com.drafens.dranacger.Comic;
 
 import android.util.Base64;
-import android.util.Log;
 
 import com.drafens.dranacger.Episode;
 import com.drafens.dranacger.Book;
