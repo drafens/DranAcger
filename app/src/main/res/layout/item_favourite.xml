@@ -62,11 +62,11 @@
 
     <ImageView
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:layout_marginTop="6dp"
         android:layout_width="8dp"
         android:layout_height="8dp"
         android:id="@+id/iv_update"
-        android:background="#993333"
+        android:background="#FF4081"
         android:visibility="invisible"/>
 
 </RelativeLayout>
