@@ -39,13 +39,6 @@ public class FragmentAnimation extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_animation,container,false);
-        try {
-            bookList = FavouriteTool.getBookList(searchItem);
-        } catch (MyJsonObjectEmptyException e) {
-            textView.setVisibility(View.VISIBLE);
-        } catch (MyJsonFormatException e) {
-            e.printStackTrace();
-        }
         initView(view);
         return view;
     }
@@ -56,6 +49,13 @@ public class FragmentAnimation extends Fragment{
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayout.VERTICAL);
         recyclerView.setLayoutManager(manager);
+        try {
+            bookList = FavouriteTool.getBookList(searchItem);
+        } catch (MyJsonObjectEmptyException e) {
+            textView.setVisibility(View.VISIBLE);
+        } catch (MyJsonFormatException e) {
+            e.printStackTrace();
+        }
         setAdapter();
         setUpdateAdapter();
     }
@@ -72,51 +72,55 @@ public class FragmentAnimation extends Fragment{
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i=0;i<bookList.size();i++) {
-                    Book book = bookList.get(i);
-                    Sites sites = Sites.getSites(book.getWebsite());
-                    try {
-                        book = sites.getBook(book.getId(), book.getLastReadChapter(), book.getLastReadChapter_id(), book.getLastReadTime());
-                    } catch (MyNetWorkException e) {
-                        isError = true;
-                    }
-                    if (!isError) {
-                        if(book.getUpdateTime()!=bookList.get(i).getUpdateTime()) {
-                            updateable = true;
-                            bookList.set(i, book);
+                if (bookList != null) {
+                    for (int i = 0; i < bookList.size(); i++) {
+                        Book book = bookList.get(i);
+                        Sites sites = Sites.getSites(book.getWebsite());
+                        try {
+                            book = sites.getBook(book, book.getLastReadChapter(), book.getLastReadChapter_id(), book.getLastReadTime());
+                        } catch (MyNetWorkException e) {
+                            isError = true;
+                        }
+                        if (!isError) {
+                            if (book.getUpdateTime() != bookList.get(i).getUpdateTime()) {
+                                updateable = true;
+                                bookList.set(i, book);
+                            }
                         }
                     }
-                }
-                if (updateable) {
-                    getUpdateList(bookList);
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            int updateSize = bookListAfterUpdate.size() - noUpdateList.size();
-                            adapter=new FavouriteAdapter(getContext(),searchItem,bookListAfterUpdate,updateSize);
-                            adapter.notifyDataSetChanged();
+                    if (updateable) {
+                        getUpdateList(bookList);
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                int updateSize = bookListAfterUpdate.size() - noUpdateList.size();
+                                adapter = new FavouriteAdapter(getContext(), searchItem, bookListAfterUpdate, updateSize);
+                                adapter.notifyDataSetChanged();
 
-                        }
-                    });
+                            }
+                        });
+                    }
                 }
             }
         }).start();
     }
 
-    private void getUpdateList(List<Book> books){
+    private void getUpdateList(List<Book> books) {
         bookListAfterUpdate = new ArrayList<>();
         noUpdateList = new ArrayList<>();
-        for (int i=0;i<books.size();i++){
-            Book book = books.get(i);
-            if(FavouriteTool.isUpdate(book.getLastReadChapter_id(),book.getUpdateChapter_id())){
-                FavouriteTool.update_favourite(i,book,searchItem);
-                bookListAfterUpdate.add(book);
-            }else{
-                noUpdateList.add(book);
+        if (books != null) {
+            for (int i = 0; i < books.size(); i++) {
+                Book book = books.get(i);
+                if (FavouriteTool.isUpdate(book.getLastReadChapter_id(), book.getUpdateChapter_id())) {
+                    FavouriteTool.update_favourite(i, book, searchItem);
+                    bookListAfterUpdate.add(book);
+                } else {
+                    noUpdateList.add(book);
+                }
             }
-        }
-        for (int i=0;i<noUpdateList.size();i++){
-            bookListAfterUpdate.add(noUpdateList.get(i));
+            for (int i = 0; i < noUpdateList.size(); i++) {
+                bookListAfterUpdate.add(noUpdateList.get(i));
+            }
         }
     }
 }

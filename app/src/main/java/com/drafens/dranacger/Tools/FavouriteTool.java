@@ -1,6 +1,7 @@
 package com.drafens.dranacger.Tools;
 
 import android.os.Environment;
+import android.util.Log;
 
 import com.drafens.dranacger.Book;
 import com.drafens.dranacger.Episode;

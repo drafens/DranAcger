@@ -31,7 +31,18 @@ public class Pufei extends Sites {
             Elements elements = document.select("ul[id=detail]");
             for(Element ele:elements.select("li")) {
                 String id=ele.select("a").first().attr("href");
-                Book book = getBook(id,"","","");
+                String icon = ele.select("img").attr("data-src");
+                String name = ele.select("h3").text();
+                String author=ele.select("dd").get(0).text();
+                String type=ele.select("dd").get(1).text();
+                String updateChapter = ele.select("dd").get(2).text();
+                String updateTime="更新于："+elements.select("dd").get(3).text();
+                String updateChapter_id = "";
+                String lastReadChapter="";
+                String lastReadChapter_id="";
+                String lastReadTime="";
+                String briefInfo="";
+                Book book = new Book(name,updateChapter,updateChapter_id,updateTime,author,type,id,icon,Sites.PUFEI,lastReadChapter,lastReadChapter_id,lastReadTime,briefInfo);
                 bookList.add(book);
             }
         }catch (Exception e){
@@ -41,24 +52,20 @@ public class Pufei extends Sites {
     }
 
     @Override
-    public Book getBook(String book_id,String lastReadChapter,String lastReadChapter_id,String lastReadTime) throws MyNetWorkException {
-        Book book;
+    public Book getBook(Book book,String lastReadChapter,String lastReadChapter_id,String lastReadTime) throws MyNetWorkException {
         try {
-            String url = url_pufei + book_id;
+            String url = url_pufei + book.getId();
             Document document = Jsoup.connect(url).get();
-            String id=book_id;
-            String name = document.select("div[class=main-bar bar-bg1]").select("h1").text();
             Elements elements = document.select("div[class=book-detail]");
-            String author=elements.select("dd").get(2).text();
-            String type=elements.select("dd").get(3).text();
-            String updateTime="更新于："+elements.select("dd").get(1).text();
-            String icon=elements.select("img").attr("src");
             String briefInfo=elements.select("div[id=bookIntro]").text();
             Element element = document.select("div[class=chapter]").select("li").get(0);
             String updateChapter_id = element.select("a").attr("href");
             updateChapter_id = updateChapter_id.substring(0,updateChapter_id.indexOf(".html"));
-            String updateChapter = element.select("a").attr("title");
-            book = new Book(name,updateChapter,updateChapter_id,updateTime,author,type,id,icon,Sites.PUFEI,lastReadChapter,lastReadChapter_id,lastReadTime,briefInfo);
+            book.setLastReadChapter(lastReadChapter);
+            book.setLastReadChapter_id(lastReadChapter_id);
+            book.setLastReadTime(lastReadTime);
+            book.setBriefInfo(briefInfo);
+            book.setUpdateChapte_id(updateChapter_id);
         }catch(Exception e){
             throw new MyNetWorkException();
         }

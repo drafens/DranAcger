@@ -2,7 +2,6 @@ package com.drafens.dranacger.Novel;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.drafens.dranacger.Activity.SettingActivity;
 import com.drafens.dranacger.Error.ErrorActivity;
 import com.drafens.dranacger.Error.MyNetWorkException;
 import com.drafens.dranacger.R;
@@ -69,8 +67,6 @@ public class FragmentNovel extends Fragment{
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), SettingActivity.class);
-                startActivity(intent);
             }
         });
         return view;

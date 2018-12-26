@@ -32,7 +32,8 @@ public class Kirikiri extends Sites{
             Elements elements = document.select("div[class=wrap center]");
             for(Element ele:elements.select("li")) {
                 String id = ele.select("a").attr("href");
-                Book book = getBook(id,"","","");
+                Book book = new Book("","","","","","","","","","","","","");
+                //getBook(id,"","","");
                 bookList.add(book);
             }
         }catch (Exception e){
@@ -42,12 +43,11 @@ public class Kirikiri extends Sites{
     }
 
     @Override
-    public Book getBook(String book_id, String lastReadChapter, String lastReadChapter_id, String lastReadTime) throws MyNetWorkException {
-        Book book;
+    public Book getBook(Book book, String lastReadChapter, String lastReadChapter_id, String lastReadTime) throws MyNetWorkException {
         try {
-            String url = url_kirikir + book_id;
+            String url = url_kirikir + book.getId();
             Document document = Jsoup.connect(url).get();
-            String id = book_id;
+            String id = book.getId();
             Elements elements = document.select("div[class=img_wrap]");
             String name = elements.select("img").attr("alt");
             String icon = url_kirikir+elements.select("img").attr("data-original");

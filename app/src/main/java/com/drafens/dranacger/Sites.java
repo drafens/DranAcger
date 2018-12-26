@@ -2,6 +2,7 @@ package com.drafens.dranacger;
 
 import com.drafens.dranacger.Animation.Kirikiri;
 import com.drafens.dranacger.Comic.Chuixue;
+import com.drafens.dranacger.Comic.Gufeng;
 import com.drafens.dranacger.Comic.Pufei;
 import com.drafens.dranacger.Error.MyNetWorkException;
 
@@ -12,8 +13,9 @@ public abstract class Sites {
     public static final String CHUIXUE = "m.chuixue.net";
     public static final String KIRIKIRI = "www.kirikiri.tv";
     public static final String PUFEI = "www.pufei.net";
+    public static final String GUFENG = "m.gufengmh.com";
     public static final String ANIMATION_GROUP[] = {Sites.KIRIKIRI};
-    public static final String COMIC_GROUP[] = {Sites.CHUIXUE,Sites.PUFEI};
+    public static final String COMIC_GROUP[] = {Sites.CHUIXUE,Sites.PUFEI,Sites.GUFENG};
     public static final String NOVEL_GROUP[] = {};
 
     /**
@@ -26,14 +28,14 @@ public abstract class Sites {
 
     /**
      *
-     * @param book_id
+     * @param book
      * @param lastReadChapter 非收藏接收""
      * @param lastReadChapter_id 非收藏接收""
      * @param lastReadTime 非收藏接收""
      * @return Book格式的对象
      * 解析失败返回null
      */
-    public abstract Book getBook(String book_id,String lastReadChapter,String lastReadChapter_id,String lastReadTime)throws MyNetWorkException;
+    public abstract Book getBook(Book book,String lastReadChapter,String lastReadChapter_id,String lastReadTime)throws MyNetWorkException;
 
     /**
      *
@@ -85,6 +87,8 @@ public abstract class Sites {
                 return new Chuixue();
             case PUFEI:
                 return new Pufei();
+            case GUFENG:
+                return new Gufeng();
             case KIRIKIRI:
                 return new Kirikiri();
         }

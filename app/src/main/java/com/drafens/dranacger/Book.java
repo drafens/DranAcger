@@ -103,6 +103,10 @@ public class Book implements Serializable{
         this.readPosition = readPosition;
     }
 
+    public void setBriefInfo(String briefInfo) {
+        this.briefInfo = briefInfo;
+    }
+
     @Override
     public String toString() {
         String string = "name:"+name;
