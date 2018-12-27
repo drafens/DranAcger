@@ -97,8 +97,10 @@ public class Gufeng extends Sites {
             Document document = Jsoup.connect(url).get();
             if (document.toString().contains("mip-img")){
                 int total = Integer.parseInt(document.select("[id=k_total]").text());
-                String s;
-                for (int i=1;i<=total;i++) {
+                String s = document.select("mip-img").get(0).attr("src");
+                urlList.add(s);
+                for (int i=2;i<=total;i++) {
+                    document = Jsoup.connect(url_gufeng + episode_id + "-" + i + ".html").get();
                     s = document.select("mip-img").get(0).attr("src");
                     urlList.add(s);
                 }
