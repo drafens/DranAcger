@@ -95,18 +95,26 @@ public class Gufeng extends Sites {
         List<String> urlList = new ArrayList<>();
         try {
             Document document = Jsoup.connect(url).get();
-            Element element = document.select("script").get(1);
-            String s = element.toString();
-            int begin = s.indexOf("chapterPath")+15;
-            Log.d(TAG, document.toString());
-            String chapterPath = "/"+s.substring(begin,s.indexOf(";",begin)-1);
-            begin = s.indexOf("[")+1;
-            String chapterImages = s.substring(begin,s.indexOf("]",begin));
-            strings = chapterImages.split(",");
-            for (int i=0;i<strings.length;i++){
-                urlList.add("http://res.gufengmh.com"+chapterPath+strings[i].substring(1,strings[i].length()-1));
+            if (document.toString().contains("mip-img")){
+                int total = Integer.parseInt(document.select("[id=k_total]").text());
+                String s;
+                for (int i=1;i<=total;i++) {
+                    s = document.select("mip-img").get(0).attr("src");
+                    urlList.add(s);
+                }
+            }else {
+                Element element = document.select("script").get(1);
+                String s = element.toString();
+                int begin = s.indexOf("chapterPath") + 15;
+                String chapterPath = "/" + s.substring(begin, s.indexOf(";", begin) - 1);
+                begin = s.indexOf("[") + 1;
+                String chapterImages = s.substring(begin, s.indexOf("]", begin));
+                strings = chapterImages.split(",");
+                for (int i = 0; i < strings.length; i++) {
+                    urlList.add("http://res.gufengmh.com" + chapterPath + strings[i].substring(1, strings[i].length() - 1));
+                }
             }
-            Log.d(TAG, String.valueOf(urlList.size()));
+            Log.d(TAG, urlList.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
